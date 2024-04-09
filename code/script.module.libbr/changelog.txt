@@ -1,4 +1,6 @@
-﻿2.0.16
+﻿2.0.17
+- Bugfix: "Sendungen nach Datum" listete auch Sendungen der Vortage auf
+2.0.16
 - "Sendungen nach Datum" etwas robuster gemacht
 2.0.15
 - Sortierung geändert: "BR" jetzt vor "ARD Alpha"

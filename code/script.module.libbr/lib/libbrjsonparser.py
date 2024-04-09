@@ -207,7 +207,7 @@ def parseDate(day,channel):
 	l = []
 	for epg in j['data']['viewer']['allLivestreams']['edges'][0]['node']['epg']:
 		broadcastEvent = epg.get('broadcastEvent',None)
-		if broadcastEvent:
+		if broadcastEvent and broadcastEvent['start'] >= day:
 			publicationOf = broadcastEvent.get('publicationOf', None)
 			if publicationOf and publicationOf['essences']['edges']:
 				d = _buildVideoDict(publicationOf)
