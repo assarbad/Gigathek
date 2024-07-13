@@ -13,10 +13,10 @@ lang_german  = libMediathek.getSetting('lang') in ('de','0','',None)
 current_lang = 'de' if lang_german else 'fr'
 addon = xbmcaddon.Addon()
 
-opa_url = 'https://api.arte.tv/api/opa/v3'
+opa_url = 'https://api.arte.tv/api/opa/v3/'
 opa_token = {"Authorization": "Bearer Nzc1Yjc1ZjJkYjk1NWFhN2I2MWEwMmRlMzAzNjI5NmU3NWU3ODg4ODJjOWMxNTMxYzEzZGRjYjg2ZGE4MmIwOA"}
 
-emac_url = 'https://api.arte.tv/api/emac/v3/' + current_lang + '/web'
+emac_url = 'https://api.arte.tv/api/emac/v3/' + current_lang + '/web/'
 emac_token = {"Authorization": "Bearer MWZmZjk5NjE1ODgxM2E0MTI2NzY4MzQ5MTZkOWVkYTA1M2U4YjM3NDM2MjEwMDllODRhMjIzZjQwNjBiNGYxYw"}
 
 player_url = "https://api.arte.tv/api/player/v2/config/%s/%s"
@@ -29,31 +29,36 @@ stream_params = '&quality=$in:XQ,HQ,SQ&mediaType=hls&language=' + current_lang +
 
 def _parse_data(video, isByDate = False):
 	d = {}
-	if video['subtitle'] and video['title']:
+
+	if video['title'] and video.get('subtitle',None):
 		d['name'] = video['title'] + ' | ' + video['subtitle']
-	elif video['subtitle']:
+	elif video.get('subtitle',None):
 		d['name'] = video['subtitle']
 	else:
 		d['name'] = video['title']
-	if 'fullDescription' in video and video['fullDescription']:
+
+	if video.get('fullDescription',None):
 		d['plot'] = video['fullDescription']
-	elif 'description' in video and video['description']:
+	elif video.get('description',None):
 		d['plot'] = video['description']
-	elif video['shortDescription']:
+	elif video.get('shortDescription',None):
 		d['plot'] = video['shortDescription']
-	if isByDate and ('broadcastDates' in video):
+
+	if isByDate and video.get('broadcastDates',None):
 		d['_airedISO8601'] = video['broadcastDates'][0]
-	if 'images' in video and video['images']:
-		if video['images']['landscape']:
+
+	if video.get('images',None):
+		if video['images'].get('landscape',None):
 			max_res = max(video['images']['landscape']['resolutions'], key=lambda item: item['w'])
 			d['thumb'] = max_res['url']
-		elif video['images']['portrait']:
+		elif video['images'].get('portrait',None):
 			max_res = max(video['images']['portrait']['resolutions'], key=lambda item: item['h'])
 			d['thumb'] = max_res['url']
+
 	if video['kind'] == "MAGAZINE" or ('isCollection' in video['kind'] and video['kind']['isCollection']):
 		d['mode'] = 'libArteListCollection'
 		d['documentId'] = video['programId']
-		d['url'] = '/programs?programId=' + video['programId'] + '&language=' + current_lang + '&fields=children,programId'
+		d['url'] = video['programId']
 		d['_type'] = 'dir'
 	else:
 		d['mode'] = 'libArtePlay'
@@ -61,6 +66,7 @@ def _parse_data(video, isByDate = False):
 		d['url'] = '/videoStreams?programId=' + video['programId'] + stream_params + '&kind=' + video['kind']['code']
 		d['_type'] = 'date'
 		d['_duration'] = video['duration']
+
 	availability_node = video.get('availability',None)
 	if availability_node:
 		aired_str = availability_node.get('upcomingDate',None)
@@ -72,6 +78,7 @@ def _parse_data(video, isByDate = False):
 		elif aired_str:
 			aired_time = libMediathek.str_to_airedtime(aired_str)
 			d['plot'] = '[COLOR blue]' + addon.getLocalizedString(32100) + ' ' + aired_time.strftime('%d/%m/%Y') + ' | [/COLOR]' + d.get('plot','')
+
 	return d
 
 
@@ -80,7 +87,25 @@ def getVideos(url):
 	url = emac_url + url
 	response = libMediathek.getUrl(url, emac_token)
 	j = json.loads(response)
-	for video in j['data']:
+	data = j.get('data', [])
+	zones = j.get('zones', None)
+	if isinstance(zones, list):
+		collection_content = [item for item in zones if item.get('code',{}).get('name',None) == 'collection_content']
+		collection_subcollection = [item for item in zones if item.get('code',{}).get('name',None) == 'collection_subcollection']
+		collection_videos = [item for item in zones if item.get('code',{}).get('name',None) == 'collection_videos']
+		for subcollection in collection_subcollection:
+			collectionId_subcollectionId = subcollection.get('code',{}).get('id','').split('_')
+			if len(collectionId_subcollectionId) == 2:
+				subcollection['programId'] = '/data/COLLECTION_SUBCOLLECTION/?collectionId=%s&subCollectionId=%s' % tuple(collectionId_subcollectionId)
+				subcollection['kind'] = { 'isCollection': True }
+				if collection_content:
+					image_data = collection_content[0].get('data', [])
+					if image_data:
+						subcollection['images'] = image_data[0].get('images',{})
+				data.append(subcollection)
+		for videos in collection_videos:
+			data += videos.get('data',[])
+	for video in data:
 		l.append(_parse_data(video))
 	return l
 
@@ -95,36 +120,8 @@ def getMagazines():
 	return l
 
 
-def getCollection(url):
-	url = opa_url + url
-	response = libMediathek.getUrl(url, opa_token)
-	j = json.loads(response)
-	program_id = j['programs'][0]['programId']
-	l = getVideos('/zones/collection_videos?id=' + program_id)
-	children = j['programs'][0]['children']
-	topics = [item for item in children if (item['kind'] == 'TOPIC' or item['kind'] == 'TV_SERIES')]
-	for topic in topics:
-		subresponse = libMediathek.getUrl(
-			opa_url + '/programs?programId=' + topic['programId'] + '&language=' + current_lang +
-			'&fields=title,subtitle,fullDescription,shortDescription,mainImage.url', opa_token
-		)
-		topic_json = json.loads(subresponse)
-		program = topic_json['programs'][0]
-		if program['title'] in ('**', '', None):
-			break
-		d = {}
-		d['name'] = program['title']
-		if program['subtitle'] != None:
-			d['name'] = d['name'] + ' | ' + program['subtitle']
-		if program['fullDescription']:
-			d['plot'] = program['fullDescription']
-		elif program['shortDescription']:
-			d['plot'] = program['shortDescription']
-		d['thumb'] = program['mainImage']['url']
-		d['_type'] = 'dir'
-		d['mode'] = 'libArteListVideos'
-		d['url'] = '/zones/collection_subcollection?id=' + topic['programId']
-		l.append(d)
+def getCollection(program_id):
+	l = getVideos(program_id)
 	return l
 
 
@@ -142,7 +139,7 @@ def getDate(yyyymmdd):
 
 
 def getSearch(s):
-	return getVideos('/zones/listing_SEARCH?limit=99&query=' + s)
+	return getVideos('/data/SEARCH_LISTING/?query=' + s)
 
 
 #legend:
@@ -207,7 +204,7 @@ def getVideoUrl(url, documentId):
 	result = None
 	prefer_opa_api = libMediathek.getSetting('api') == 'OPAv3'
 	getVideoUrl_functions = (getVideoUrl_OPAv3, getVideoUrl_Default) if prefer_opa_api else (getVideoUrl_Default, getVideoUrl_OPAv3)
-	for function in getVideoUrl_functions: 
+	for function in getVideoUrl_functions:
 		result = function(url, documentId)
 		if result:
 			break
