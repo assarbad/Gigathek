@@ -15,7 +15,7 @@ else: # for Python 3
 	from functools import reduce
 
 addon = xbmcaddon.Addon()
-baseUrlJson = 'https://zdf-cdn.live.cellular.de/mediathekV2/'
+baseUrlJson = 'https://zdf-prod-futura.zdf.de/mediathekV2/'
 
 
 def deep_get(dictionary, keys, default = None):

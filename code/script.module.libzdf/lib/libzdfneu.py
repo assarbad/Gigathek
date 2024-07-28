@@ -13,7 +13,7 @@ def libZdfListMainMobile():
 	flavour = ' / Mobile'
 	translation = libMediathek.getTranslation
 	l.append({'sort':'31033'+flavour, 'name':translation(31033)+flavour, 'mode':'libZdfListChannelDates', '_type':'dir'})
-	l.append({'sort':'31034'+flavour, 'name':translation(31034)+flavour, 'mode':'libZdfListRubrics', '_type':'dir'})
+	l.append({'sort':'31034', 'name':translation(31034), 'mode':'libZdfListRubrics', '_type':'dir'})
 	l.append({'sort':'31036', 'name':translation(31036), 'mode':'libZdfListLivestreams', '_type':'dir'})
 	l.append({'sort':'31039'+flavour, 'name':translation(31039)+flavour, 'mode':'libZdfListSearch', '_type':'dir'})
 	return l

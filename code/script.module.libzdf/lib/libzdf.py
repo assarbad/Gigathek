@@ -57,7 +57,6 @@ def libZdfListMainClassic():
 	translation = libMediathek.getTranslation
 	l.append({'sort':'31032', '_name':translation(31032), 'mode':'libZdfListShows', '_type': 'dir'})
 	l.append({'sort':'31033'+flavour, '_name':translation(31033)+flavour, 'mode':'libZdfListChannel', '_type': 'dir'})
-	l.append({'sort':'31034'+flavour, '_name':translation(31034)+flavour, 'mode':'libZdfListRubrics', '_type': 'dir', 'url':'https://api.zdf.de/search/documents?q=%2A&contentTypes=category'})
 	l.append({'sort':'31039'+flavour, '_name':translation(31039)+flavour, 'mode':'libZdfSearch',   '_type': 'dir'})
 	return l
 
