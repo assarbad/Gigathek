@@ -13,8 +13,7 @@ lang_german  = libMediathek.getSetting('lang') in ('de','0','',None)
 current_lang = 'de' if lang_german else 'fr'
 addon = xbmcaddon.Addon()
 
-opa_url = 'https://api.arte.tv/api/opa/v3/'
-opa_token = {"Authorization": "Bearer Nzc1Yjc1ZjJkYjk1NWFhN2I2MWEwMmRlMzAzNjI5NmU3NWU3ODg4ODJjOWMxNTMxYzEzZGRjYjg2ZGE4MmIwOA"}
+opa_url = 'https://www.arte.tv/hbbtvv2/services/web/index.php/OPA/v3/streams/%s/SHOW/%s';
 
 emac_url = 'https://api.arte.tv/api/emac/v3/' + current_lang + '/web/'
 emac_token = {"Authorization": "Bearer MWZmZjk5NjE1ODgxM2E0MTI2NzY4MzQ5MTZkOWVkYTA1M2U4YjM3NDM2MjEwMDllODRhMjIzZjQwNjBiNGYxYw"}
@@ -212,12 +211,12 @@ def getVideoUrl(url, documentId):
 
 def getVideoUrl_OPAv3(url, documentId):
 	result = None
-	url = opa_url + url
-	response = libMediathek.getUrl(url, opa_token)
+	url = opa_url % (documentId, current_lang)
+	response = libMediathek.getUrl(url)
 	j = json.loads(response)
 	storedLang = 0
 	bitrate = 0
-	hls_videos = [value for value in j['videoStreams'] if value['mediaType'] == 'hls']
+	hls_videos = j.get('videoStreams',[])
 	for video in hls_videos:
 		voice_subtitle = video['audioCode'].split('-');
 		voice = voice_subtitle[0].split('[')[0]
@@ -226,11 +225,11 @@ def getVideoUrl_OPAv3(url, documentId):
 		# if currentLang is native language => prefer "no subtitle"
 		# if currentLang is foreign language => prefer subtitle in native language
 		currentLang = currentLang * 10 + subtitles.get(subtitle, lambda: 9 if (currentLang >= voices[nativeVoice]()) else 0)()
-		currentBitrate = video['bitrate']
+		currentBitrate = qualities.get(video['quality'], 0)
 		if currentLang > storedLang or (currentLang == storedLang and currentBitrate > bitrate):
 			storedLang = currentLang
 			bitrate = currentBitrate
-			result = {'url':video['url'], 'type': 'video', 'stream':'hls'}
+			result = {'url':video['url'], 'type': 'video', 'stream': 'mp4' }
 	return {'media': [result]} if result else None
 
 def getVideoUrl_Default(url, documentId):
