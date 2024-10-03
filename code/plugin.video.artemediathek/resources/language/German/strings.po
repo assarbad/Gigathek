@@ -12,7 +12,15 @@ msgstr "Sprache"
 
 msgctxt "#32002"
 msgid "Preferred Stream API"
-msgstr "Bevorzugtes Stream API"
+msgstr "Bevorzugtes Stream-API"
+
+msgctxt "#32010"
+msgid "Stream API / Download settings"
+msgstr "Stream-API / Download-Einstellungen"
+
+msgctxt "#32011"
+msgid "Download directory"
+msgstr "Download-Verzeichnis"
 
 
 msgctxt "#32100"

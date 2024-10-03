@@ -14,6 +14,14 @@ msgctxt "#32002"
 msgid "Preferred Stream API"
 msgstr "Preferred Stream API"
 
+msgctxt "#32010"
+msgid "Stream API / Download settings"
+msgstr "Stream API / Download settings"
+
+msgctxt "#32011"
+msgid "Download directory"
+msgstr "Download directory"
+
 
 msgctxt "#32100"
 msgid "Broadcast date"
