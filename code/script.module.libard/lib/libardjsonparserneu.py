@@ -16,7 +16,6 @@ else: # for Python 3
 addon = xbmcaddon.Addon()
 
 baseUrlJsonDirect = 'https://api.ardmediathek.de/page-gateway/pages/'
-baseUrlHtml = 'https://www.ardmediathek.de/video/'
 baseUrlProgramAPI = 'https://programm-api.ard.de/program/api/program?day='
 baseUrlDocuments = 'https://api.ardmediathek.de/page-gateway/pages/ard/item/'
 
@@ -97,7 +96,7 @@ def parseSearchAPI(search_string):
 				if id and name:
 					d ={}
 					d['documentId'] = id
-					d['url'] = baseUrlHtml + id
+					d['url'] = baseUrlDocuments + id
 					d['duration'] = str(item.get('duration',None))
 					d['name'] = deep_get(item, 'show.title')
 					if d['name']:
@@ -122,48 +121,10 @@ def parseSearchAPI(search_string):
 						thumb_src = thumb_src.replace('{width}','1024')
 						d['thumb'] = thumb_src
 					d['_type'] = 'video'
-					d['mode'] = 'libArdPlayHtml'
+					d['mode'] = 'libArdPlay'
 					l.append(d)
 	except:
 		pass
-	return l
-
-
-def parseSearchHtml(search_string):
-	l = []
-	response = libMediathek.getUrl('https://www.ardmediathek.de/suche/'+search_string)
-	split = response.split('<script id="fetchedContextValue" type="application/json">');
-	if (len(split) > 1):
-		json_str = split[1]
-		json_str = json_str.split('</script>')[0];
-		j = json.loads(json_str)
-		for grid_item in j.values():
-			if isinstance(grid_item,dict) and (grid_item.get('type',None) == 'gridlist'):
-				for item in grid_item.get('teasers',[]):
-					if isinstance(item,dict) and (item.get('type',None) == 'ondemand'):
-						id = item.get('id',None)
-						name = item['shortTitle']
-						if id and name:
-							d ={}
-							d['documentId'] = id
-							d['url'] = baseUrlHtml + id
-							d['duration'] = str(item.get('duration',None))
-							d['name'] = name
-							d['plot'] = item.get('longTitle',None)
-							d['date'] = item.get('broadcastedOn',None)
-							thumb_id = '$Teaser:' + id
-							thumb_item = deep_get(item, 'images.aspect16x9')
-							if not thumb_item:
-								thumb_item = deep_get(item, 'images.aspect1x1')
-							if not thumb_item:
-								thumb_item = deep_get(item, 'images.aspect16x7')
-							if thumb_item:
-								thumb_src = thumb_item.get('src','')
-								thumb_src = thumb_src.replace('{width}','1024')
-								d['thumb'] = thumb_src
-							d['_type'] = 'video'
-							d['mode'] = 'libArdPlayHtml'
-							l.append(d)
 	return l
 
 

@@ -64,7 +64,6 @@ def libArdListSearch():
 	search_string = libMediathek.getSearchString()
 	if search_string:
 		return libArdJsonParserNeu.parseSearchAPI(search_string)
-		# return libArdJsonParserNeu.parseSearchHtml(search_string)
 	else:
 		return None
 
@@ -73,11 +72,6 @@ def libArdListShow():
 
 def libArdPlay():
 	result = libArdJsonParserNeu.getVideoUrl(params['url'])
-	result = libMediathek.getMetadata(result)
-	return result
-
-def libArdPlayHtml():
-	result = libArdJsonParserNeu.getVideoUrlHtml(params['url'])
 	result = libMediathek.getMetadata(result)
 	return result
 
@@ -122,7 +116,6 @@ modes = {
 	'libArdListSearch':               ( libArdListSearch, 'movies' ),
 	'libArdListShow':                 ( libArdListShow, 'movies' ),
 	'libArdPlay':                     ( libArdPlay, None ),
-	'libArdPlayHtml':                 ( libArdPlayHtml, None ),
 }
 
-playModes = ('libArdPlay', 'libArdPlayHtml')
+playModes = ('libArdPlay', )
