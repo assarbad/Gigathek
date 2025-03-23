@@ -18,12 +18,14 @@ if sys.version_info[0] < 3: # for Python 2
 	from cookielib import CookieJar
 	from urllib2 import Request, urlopen, build_opener, HTTPCookieProcessor
 	from urllib import quote_plus
+	from xbmc import validatePath 
 else: # for Python 3
 	libmediathek3_addonid = 'script.module.libmediathek3.matrix'
 	from io import BytesIO
 	from http.cookiejar import CookieJar
 	from urllib.request import Request, urlopen, build_opener, HTTPCookieProcessor
 	from urllib.parse import quote_plus
+	from xbmcvfs import validatePath
 
 
 def log(msg):
@@ -119,7 +121,7 @@ def pathUserdata(path):
 	return special
 
 def pathAddon(path):
-	special = xbmc.validatePath(addon.getAddonInfo('path').replace('\\','/')+path.replace('\\','/'))
+	special = validatePath(addon.getAddonInfo('path').replace('\\','/')+path.replace('\\','/'))
 	special = special.replace('//','/').replace('special:/','special://')
 	return special
 
