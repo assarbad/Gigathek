@@ -36,6 +36,18 @@ msgctxt "#32013"
 msgid "Available to"
 msgstr "Abrufbar bis"
 
+msgctxt "#32020"
+msgid "Livestream settings"
+msgstr "Livestream Einstellungen"
+
+msgctxt "#32021"
+msgid "Fetch livestream URLs via API"
+msgstr "Livestream URLs vom API beziehen"
+
+msgctxt "#32022"
+msgid "Read livestream URLs from 'livestream.json' in ADDON_DATA"
+msgstr "Livestream URLs aus 'livestream.json' in ADDON_DATA lesen"
+
 msgctxt "#32100"
 msgid "Usage of the mobile version can be defined in the addon settings."
 msgstr "Die Verwendung der Mobile-Version kann in den Addon-Einstellung festgelegt werden."

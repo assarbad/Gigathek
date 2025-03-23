@@ -1,4 +1,7 @@
-﻿2.1.29
+﻿2.1.30
+- Livestreams wahlweise aus Datei 'livestream.json' lesen oder via API beziehen
+  Datei 'livestream.json' wahlweise in special://home/addons oder in special://profile/addon_data suchen
+2.1.29
 - Das ZDF-API hat eine neue URL
 2.1.28
 - Stream-Position (Uhrzeit) einblenden bei vor-/zurückspulen im Livestream

@@ -24,56 +24,64 @@ def deep_get(dictionary, keys, default = None):
 
 def parseLivestreams():
 	result = []
-	day = date.today()
-	yyyymmdd = day.strftime('%Y-%m-%d')
-	url = baseUrlJson + 'live-tv/' + yyyymmdd
-	response = libMediathek.getUrl(url)
-	j = json.loads(response)
-	epgCluster = j.get('epgCluster',None)
-	if epgCluster:
-		for livestreams in epgCluster:
-			item = livestreams.get('liveStream',None)
-			if item:
-				documentId = item['externalId']
-				name = item['titel']
-				if documentId and name:
-					d = {}
-					d['documentId'] = documentId
-					d['name'] = name
-					formitaeten = parseFormitaeten(item,'live')
-					if formitaeten:
-						fm0 = formitaeten['media'][0]
-						d['url'] = fm0['url']
-						d['_type'] = fm0['type']
-						d['stream'] = fm0['stream']
-					else:
-						continue
-					d['plot'] = item.get('headline','')
-					if d['plot']:
-						d['plot'] = '[B]' + d['plot'] + '[/B][CR]'
-					d['plot'] = d['plot'] + item.get('beschreibung',None)
-					thumb = deep_get(item, 'teaserBild.1280.url')
-					if not thumb:
-						thumb = deep_get(item, 'teaserBild.768.url')
-					if not thumb:
-						thumb = deep_get(item, 'teaserBild.640.url')
-					if thumb:
-						d['thumb'] = thumb
-					d['mode'] = 'libZdfPlayLivestream'
-					d['live'] = 'true'
-					result.append(d)
 	snapshot_file = 'livestream.json'
-	utils.f_mkdir(utils.pathUserdata(''))
-	if result:
-		utils.f_write(utils.pathUserdata(snapshot_file), json.dumps(result))
+	livestream_via_api = libMediathek.getSettingBool('livestream_via_api')
+	if livestream_via_api: 
+		day = date.today()
+		yyyymmdd = day.strftime('%Y-%m-%d')
+		url = baseUrlJson + 'live-tv/' + yyyymmdd
+		response = libMediathek.getUrl(url)
+		j = json.loads(response)
+		epgCluster = j.get('epgCluster',None)
+		if epgCluster:
+			for livestreams in epgCluster:
+				item = livestreams.get('liveStream',None)
+				if item:
+					documentId = item['externalId']
+					name = item['titel']
+					if documentId and name:
+						d = {}
+						d['documentId'] = documentId
+						d['name'] = name
+						formitaeten = parseFormitaeten(item,'live')
+						if formitaeten:
+							fm0 = formitaeten['media'][0]
+							d['url'] = fm0['url']
+							d['_type'] = fm0['type']
+							d['stream'] = fm0['stream']
+						else:
+							continue
+						d['plot'] = item.get('headline','')
+						if d['plot']:
+							d['plot'] = '[B]' + d['plot'] + '[/B][CR]'
+						d['plot'] = d['plot'] + item.get('beschreibung',None)
+						thumb = deep_get(item, 'teaserBild.1280.url')
+						if not thumb:
+							thumb = deep_get(item, 'teaserBild.768.url')
+						if not thumb:
+							thumb = deep_get(item, 'teaserBild.640.url')
+						if thumb:
+							d['thumb'] = thumb
+						d['mode'] = 'libZdfPlayLivestream'
+						d['live'] = 'true'
+						result.append(d)
+		utils.f_mkdir(utils.pathUserdata(''))
+		if result:
+			utils.f_write(utils.pathUserdata(snapshot_file), json.dumps(result))
+		else:
+			try:
+				result = json.loads(utils.f_open(utils.pathUserdata(snapshot_file)))
+				for item in result:
+					item['name'] += ' (Snapshot)'
+			except:
+				pass
 	else:
-		try:
-			res = json.loads(utils.f_open(utils.pathUserdata(snapshot_file)))
-			for item in res:
-				item['name'] += ' (Snapshot)'
-			result = res 
-		except:
-			pass
+		livestream_from_addondata = libMediathek.getSettingBool('livestream_from_addondata')
+		if livestream_from_addondata: 
+			result = json.loads(utils.f_open(utils.pathUserdata(snapshot_file)))
+		else:
+			result = json.loads(utils.f_open(utils.pathAddon('/resources/' + snapshot_file)))
+
 	return result
 
 
