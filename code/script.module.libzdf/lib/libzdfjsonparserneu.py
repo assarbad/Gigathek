@@ -31,6 +31,12 @@ def parseLivestreams():
 		yyyymmdd = day.strftime('%Y-%m-%d')
 		url = baseUrlJson + 'live-tv/' + yyyymmdd
 		response = libMediathek.getUrl(url)
+		# url = (
+		# 	"https://api.zdf.de/tmd/2/ngplayer_2_3/live/ptmd/%s"
+		# 	 % ["247onAir-201", "247onAir-202", "247onAir-203", "247onAir-204", "247onAir-205", "247onAir-206", "247onAir-207", "247onAir-208"]
+		# )  
+		# import libzdfjsonparser
+		# response = libzdfjsonparser.getU(url)
 		j = json.loads(response)
 		epgCluster = j.get('epgCluster',None)
 		if epgCluster:
