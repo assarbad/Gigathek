@@ -50,7 +50,9 @@ def lib3satHtmlListDateVideos():
 
 def lib3satHtmlListShows():
 	libMediathek.sortAZ()
-	url = lib3satHtmlParser.base + '/sendungen-a-z?group=' + params['name'].lower()
+	url = params.get('url', None)
+	if not url:
+		url = lib3satHtmlParser.base + '/sendungen-a-z?group=' + params['name'].lower()
 	l = lib3satHtmlParser.getAZ(url)
 	return l
 

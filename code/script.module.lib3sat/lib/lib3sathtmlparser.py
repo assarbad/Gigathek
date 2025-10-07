@@ -3,6 +3,7 @@
 import json
 from datetime import datetime
 import bs4 as bs
+from concurrent.futures import ThreadPoolExecutor as PoolExecutor
 import libmediathek3 as libMediathek
 
 
@@ -69,6 +70,30 @@ def getDate(date_str):
 	return l
 
 
+def lib3satHtmlPlay(url, justDetect = False):
+	result = None
+	if url is None:
+		params = libMediathek.get_params()
+		url = params['url']
+	response = libMediathek.getUrl(url)
+	soup = bs.BeautifulSoup(response, 'html.parser')
+	playerbox = soup.find('div', {'class': 'b-playerbox'})
+	if playerbox and hasattr(playerbox,'attrs'):
+		if justDetect:
+			return True
+		else:
+			jsb_str = playerbox.attrs.get('data-zdfplayer-jsb', None)
+			if jsb_str:
+				jsb = json.loads(jsb_str)
+				content_link = jsb['content']
+				api_token = jsb['apiToken']
+				content_response = getU(content_link, api_token)
+				target = json.loads(content_response)
+				j = grepItem(target)
+				result = getVideoUrl(j['url'], api_token)
+	return result
+
+
 def getAZ(url):
 	l = []
 	response = libMediathek.getUrl(url)
@@ -82,8 +107,6 @@ def getAZ(url):
 			name_attr = article.find('p',  {'class': 'a--headline'})
 			if len(name_attr) > 0 and href:
 				name = name_attr.text
-				d['_type'] = 'video'
-				d['mode'] = 'lib3satHtmlPlay'
 				d['name'] = name
 				d['plot'] = name
 				d['url'] = base + href
@@ -91,7 +114,24 @@ def getAZ(url):
 				if picture:
 					d['thumb'] = chooseImage(picture.contents, thumbnail2_types)
 				l.append(d)
-	return l
+
+	def detectSubdirectories(d):
+		try:
+			if lib3satHtmlPlay(d['url'], justDetect = True):
+				d['_type'] = 'video'
+				d['mode'] = 'lib3satHtmlPlay'
+			else:
+				d['_type'] = 'dir'
+				d['mode'] = 'lib3satHtmlListShows'
+		except:
+			d = None
+		return d
+
+	executor = PoolExecutor(max_workers=64)
+	l = executor.map(detectSubdirectories, l)
+	# war: l = map(detectSubdirectories, l)
+
+	return [ d for d in l if d ]
 
 
 def grepItem(target):
@@ -141,15 +181,15 @@ def getVideoUrl(url, api_token):
 	response = getU(url,api_token)
 	j = json.loads(response)
 	for item in j['priorityList']:
-		if (item['formitaeten'][0].get('type',None) == 'h264_aac_ts_http_m3u8_http' 
-			or 
+		if (item['formitaeten'][0].get('type',None) == 'h264_aac_ts_http_m3u8_http'
+			or
 			item['formitaeten'][0].get('mimeType',None) == 'application/x-mpegURL'
-		): 
+		):
 			for streams in item['formitaeten'][0]['qualities']:
 				if streams['quality'] == 'auto':
 					media.insert(0, {'url':streams['audio']['tracks'][0]['uri'], 'type': 'video', 'stream':'hls'})
 		elif (item['formitaeten'][0].get('type',None) == 'h264_aac_mp4_http_na_na'
-			or  
+			or
 			item['formitaeten'][0].get('mimeType',None) == 'video/mp4'
 		):
 			for streams in item['formitaeten'][0]['qualities']:
@@ -162,32 +202,11 @@ def getVideoUrl(url, api_token):
 	ignore_adaptive = libMediathek.getSettingBool('ignore_adaptive')
 	while ignore_adaptive and len(media) > 1 and media[0]['stream'] == 'hls':
 		del media[0]
-	if media: 
+	if media:
 		result = dict(media = media)
 		for caption in j.get('captions',[]):
 			if caption['format'] == 'ebu-tt-d-basic-de':
 				result['subtitle'] = [{'url':caption['uri'], 'type':'ttml', 'lang':'de', 'colour':True}]
 		return result
-	else: 
+	else:
 		return None
-
-
-def lib3satHtmlPlay(url):
-	result = None
-	if url is None:
-		params = libMediathek.get_params()
-		url = params['url']
-	response = libMediathek.getUrl(url)
-	soup = bs.BeautifulSoup(response, 'html.parser')
-	playerbox = soup.find('div', {'class': 'b-playerbox'})
-	if playerbox and hasattr(playerbox,'attrs'):
-		jsb_str = playerbox.attrs.get('data-zdfplayer-jsb', None)
-		if jsb_str:
-			jsb = json.loads(jsb_str)
-			content_link = jsb['content']
-			api_token = jsb['apiToken']
-			content_response = getU(content_link, api_token)
-			target = json.loads(content_response)
-			j = grepItem(target)
-			result = getVideoUrl(j['url'], api_token)
-	return result
