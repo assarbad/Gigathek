@@ -127,7 +127,7 @@ def getAZ(url):
 			d = None
 		return d
 
-	executor = PoolExecutor(max_workers=64)
+	executor = PoolExecutor(max_workers=8)
 	l = executor.map(detectSubdirectories, l)
 	# war: l = map(detectSubdirectories, l)
 

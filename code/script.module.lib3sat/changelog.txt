@@ -1,4 +1,4 @@
-1.2.11
+1.2.12
 - Subdirectories werden jetzt (meistens) korrekt erkannt
 1.2.10
 - Umstellung auf neues Layout zur Anzeige der Videos
