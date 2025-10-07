@@ -72,6 +72,8 @@ def adjust_for_matrix( line ):
 	elif line.find('<import addon="xbmc.python" version="2.25.0"') >= 0:
 		# replace Python version
 		line = line.replace('<import addon="xbmc.python" version="2.25.0"', '<import addon="xbmc.python" version="3.0.0"')
+	elif line.find('<import addon="script.module.futures"') >= 0:
+		line = ''
 	elif line.find('<import') >= 0 and line.find('" provider-name="' + my_provider_name + '"') >= 0:
 		# add matrix_extension to dependency Addon-ID
 		line = line.replace('" version="', matrix_extension + '" version="')
