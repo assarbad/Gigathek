@@ -130,7 +130,9 @@ def getDate(yyyymmdd):
 	url = emac_url + '/TV_GUIDE?day=' + yyyymmdd
 	response = libMediathek.getUrl(url, emac_token)
 	j = json.loads(response)
-	data = j['zones'][1]['data']
+	data = []
+	for zone in j['zones']:
+		data += zone['data']
 	videos = [video for video in data if video['programId']]
 	for video in videos:
 		l.append(_parse_data(video, True))
