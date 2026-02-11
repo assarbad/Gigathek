@@ -1,4 +1,6 @@
-﻿1.5.37
+﻿1.5.38
+- Bugfix Livestream-Position für Livestreams bei denen sich die Gesamtzeit während des Anschauens verlängert
+1.5.37
 - In Kodi 19, the validatePath function has been moved from xbmc to xbmcvfs
 1.5.36
 - Keine Stream-Position einblenden bei weniger als 20 Sekunden vor-/zurückspulen

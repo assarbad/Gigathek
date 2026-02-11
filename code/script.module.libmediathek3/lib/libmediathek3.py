@@ -201,14 +201,15 @@ def ShowSeekPos(player, url):
 		xbmc.sleep(100)
 		if player.isPlaying():
 			try:
-				play_time = player.getTime()	# akt. Pos im Puffer (0=Pufferstart)
+				play_time = int(player.getTime())	# akt. Pos im Puffer (0=Pufferstart)
 			except:
 				play_time = LastSeek
 
-			p = int(play_time)
+			p = play_time
 
 			# regelm. Schwankung bei Livestreams 6-10 (empirisch):
 			if abs(LastSeek-p) >= 20:			# rückwärts/vorwärts im Puffer
+				TotalTime = int(player.getTotalTime())	# TotalTime könnte sich geändert haben!
 				pos_sec = TotalTime - p			# je kleiner p desto größer der Zeitabzug
 				now = time.mktime(datetime.now().timetuple()) # Unix-Format 1489094334.0
 				time_sec = int(now) - pos_sec	# Pos-Sekunden von akt. Zeit abziehen
