@@ -182,37 +182,35 @@ def ShowSeekPos(player, url):
 
 	# Maximal 10 Sekunden bis sich der Player initialisiert hat (Raspi, empirisch)
 	i = 0
-	TotalTime = 0
+	total_time = 0
 	while not monitor.waitForAbort(1) and i < 10:
 		xbmc.sleep(100)
 		if player.isPlaying():
-			TotalTime = int(player.getTotalTime())	# sec, float -> int, max. Puffergröße
-			if TotalTime:
+			total_time = int(player.getTotalTime())	# sec, float -> int, max. Puffergröße
+			if total_time:
 				break
 		i += 1
 
-	if not TotalTime:
+	if not total_time:
 		return
 
-	LastSeek = int(player.getTime())			# Basis-Wert für akt. Uhrzeit
+	last_seek = int(player.getTime())			# Basis-Wert für akt. Uhrzeit
 	LastBufTime = now_dt						# für sync errors
 
 	while not monitor.waitForAbort(1):
 		xbmc.sleep(100)
 		if player.isPlaying():
+			total_time = int(player.getTotalTime())	# total_time könnte sich geändert haben!
 			try:
 				play_time = int(player.getTime())	# akt. Pos im Puffer (0=Pufferstart)
 			except:
-				play_time = LastSeek
-
-			p = play_time
+				play_time = last_seek
 
 			# regelm. Schwankung bei Livestreams 6-10 (empirisch):
-			if abs(LastSeek-p) >= 20:			# rückwärts/vorwärts im Puffer
-				TotalTime = int(player.getTotalTime())	# TotalTime könnte sich geändert haben!
-				pos_sec = TotalTime - p			# je kleiner p desto größer der Zeitabzug
+			if abs(last_seek - play_time) >= 20:			# rückwärts/vorwärts im Puffer
+				versatz = total_time - play_time
 				now = time.mktime(datetime.now().timetuple()) # Unix-Format 1489094334.0
-				time_sec = int(now) - pos_sec	# Pos-Sekunden von akt. Zeit abziehen
+				time_sec = int(now) - versatz	# Versatz von akt. Zeit abziehen
 				new_dt = datetime.fromtimestamp(time_sec)
 				t_string = new_dt.strftime("%H:%M:%S")
 
@@ -220,7 +218,7 @@ def ShowSeekPos(player, url):
 					LastBufTime = new_dt
 					xbmcgui.Dialog().notification(t_string, "Livestream-Position", icon, 5000, sound = False)
 
-			LastSeek = max(0,min(p,TotalTime))
+			last_seek = max(0,min(play_time,total_time))
 
 		else:
 			break

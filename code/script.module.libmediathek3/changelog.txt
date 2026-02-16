@@ -1,4 +1,6 @@
-﻿1.5.38
+﻿1.5.39
+- Der Bugfix aus Version 1.5.38 wurde nochmals verbessert
+1.5.38
 - Bugfix Livestream-Position für Livestreams bei denen sich die Gesamtzeit während des Anschauens verlängert
 1.5.37
 - In Kodi 19, the validatePath function has been moved from xbmc to xbmcvfs
