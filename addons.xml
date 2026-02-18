@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
 
-    <addon id="Gigathek" name="Deutsche öffentlich-rechtliche TV-Mediatheken" version="1.0.19" provider-name="68000a">
-        <extension point="xbmc.addon.repository" name="Deutsche TV-Mediatheken Add-on Repository">
-        </extension>
-        <extension point="xbmc.addon.metadata">
-            <summary>Deutsche öffentlich-rechtliche TV-Mediatheken</summary>
-            <description>Download and install addons for German TV media libraries. Compatible with Kodi 17 "Krypton", Kodi 18 "Leia" and Kodi 19 "Matrix".</description>
-            <platform>all</platform>
-        </extension>
+    <addon id="Gigathek" name="Gigathek (old-broken) - war: Deutsche öffentlich-rechtliche TV-Mediatheken" version="1.0.20" provider-name="68000a">
+      <extension point="xbmc.addon.repository" name="Deutsche TV-Mediatheken Add-on Repository">
+      </extension>
+      <extension point="xbmc.addon.metadata">
+        <summary>Deutsche öffentlich-rechtliche TV-Mediatheken</summary>
+        <description lang="de_DE">Dieses Addon hat eine neue Addon-ID erhalten![CR]Die neue ID lautet: 'repository.gigathek'.[CR][CR]Bitte das neue Addon mit der Versionsnummer 1.0.21 AKTIVIEREN.[CR]Danach dieses Addon mit der Versionsnummer 1.0.20 DEINSTALLIEREN.</description>
+        <platform>all</platform>
+        <lifecyclestate type="broken">Dieses Addon hat eine neue Addon-ID erhalten![CR]Die neue ID lautet: 'repository.gigathek'.</lifecyclestate>
+        <news>Dieses Addon hat eine neue Addon-ID erhalten![CR]Die neue ID lautet: 'repository.gigathek'.[CR][CR]Bitte das neue Addon mit der Versionsnummer 1.0.21 AKTIVIEREN.[CR]Danach dieses Addon mit der Versionsnummer 1.0.20 DEINSTALLIEREN.</news>
+      </extension>
+    </addon>
+
+    <addon id="repository.gigathek" name="Deutsche öffentlich-rechtliche TV-Mediatheken" version="1.0.21" provider-name="68000a">
+      <extension point="xbmc.addon.repository" name="Deutsche TV-Mediatheken Add-on Repository">
+      </extension>
+      <extension point="xbmc.addon.metadata">
+        <summary>Deutsche öffentlich-rechtliche TV-Mediatheken</summary>
+        <description>Download and install addons for German TV media libraries.[CR]Intensively tested with Kodi 17 "Krypton", Kodi 18 "Leia" and Kodi 21 "Omega".[CR]Other Kodi versions might work or not.</description>
+        <platform>all</platform>
+      </extension>
     </addon>
 
     <addon id="plugin.video.3satmediathek" name="3sat Mediathek" version="1.3.8" provider-name="68000a">
