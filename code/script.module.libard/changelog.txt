@@ -1,3 +1,5 @@
+5.1.46
+- Das API der ARD hat sich geändert. Abspielen von Videos funktioniert jetzt wieder
 5.1.45
 - Abspielen von Videos aus der Suche heraus funktioniert wieder
 5.1.44

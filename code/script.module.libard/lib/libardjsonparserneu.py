@@ -18,6 +18,7 @@ addon = xbmcaddon.Addon()
 baseUrlJsonDirect = 'https://api.ardmediathek.de/page-gateway/pages/'
 baseUrlProgramAPI = 'https://programm-api.ard.de/program/api/program?day='
 baseUrlDocuments = 'https://api.ardmediathek.de/page-gateway/pages/ard/item/'
+baseUrlDocumentsQueryParams = '?embedded=false&mcV6=true'
 
 pageIndexAZPage = 0
 pageIndexProgramPage = 1
@@ -73,8 +74,12 @@ def getVideoUrl(url):
 	j = json.loads(response)
 	widgets = j.get('widgets',None)
 	if widgets:
-		for widget in widgets:
-			if widget.get('type','').startswith('player'):
+		player_widgets = filter(lambda widget: widget.get('type','').startswith('player'), widgets) 
+		for widget in player_widgets:
+			if result: break
+			mediaCollection = deep_get(widget, 'mediaCollection.embedded.streams')
+			result = extract (mediaCollection)
+			if not result:
 				mediaCollection = deep_get(widget, 'mediaCollection.embedded._mediaArray')
 				result = extract (mediaCollection)
 				if not result:
@@ -96,7 +101,7 @@ def parseSearchAPI(search_string):
 				if id and name:
 					d ={}
 					d['documentId'] = id
-					d['url'] = baseUrlDocuments + id
+					d['url'] = baseUrlDocuments + id + baseUrlDocumentsQueryParams
 					d['duration'] = str(item.get('duration',None))
 					d['name'] = deep_get(item, 'show.title')
 					if d['name']:
@@ -130,10 +135,10 @@ def parseSearchAPI(search_string):
 
 def getVideoUrlHtml(url):
 	response = libMediathek.getUrl(url)
-	split = response.split('<script id="fetchedContextValue" type="application/json">');
+	split = response.split('<script id="fetchedContextValue" type="application/json">')
 	if (len(split) > 1):
 		json_str = split[1]
-		json_str = json_str.split('</script>')[0];
+		json_str = json_str.split('</script>')[0]
 		j = json.loads(json_str)
 		if isinstance(j, list):
 			for listitem_outerlist in j:
@@ -152,7 +157,11 @@ def getVideoUrlHtml(url):
 
 def extract(mediaCollection): 
 	if mediaCollection and isinstance(mediaCollection,list) and isinstance(mediaCollection[0],dict):
-		return extractBestQuality(mediaCollection[0].get('_mediaStreamArray',[]), lambda x: None if isinstance(x,list) else x)
+		mainMediacollection = list(filter(lambda x: x.get('kind', None) == 'main', mediaCollection))
+		if mainMediacollection:
+			return extractBestQuality(mainMediacollection[0].get('media',[]), lambda x: None if isinstance(x,list) else x)
+		else:
+			return extractBestQuality(mediaCollection[0].get('_mediaStreamArray',[]), lambda x: None if isinstance(x,list) else x)
 	return None
 
 
@@ -160,7 +169,7 @@ def extractBestQuality(streams, fnGetFinalUrl):
 	if streams:
 		media = []
 		for item in streams:
-			if isinstance(item,dict) and (item.get('__typename','MediaStreamArray') == 'MediaStreamArray'):
+			if isinstance(item,dict):
 				stream = item.get('url',None)
 				if not stream:
 					stream = item.get('_stream',None)
@@ -169,10 +178,10 @@ def extractBestQuality(streams, fnGetFinalUrl):
 					if url:
 						if url.startswith('//'):
 							url = 'https:' + url
-						quality = item.get('maxHResolutionPx',-1);
+						quality = item.get('maxHResolutionPx',-1)
 						if quality == -1:
-							quality = item.get('_quality',-1);
-						if (quality == 'auto') or item.get('isAdaptiveQualitySelectable',False):
+							quality = item.get('_quality',-1)
+						if quality == 'auto' or item.get('forcedLabel',None) == 'Auto' or item.get('isAdaptiveQualitySelectable',False):
 							media.insert(0,{'url':url.replace("index.m3u8", "master.m3u8"), 'type':'video', 'stream':'hls'})
 						elif url[-4:].lower() == '.mp4':
 							try:
@@ -251,9 +260,7 @@ def parse(pageIndex, url, partnerKey=None, channelKey=None, letter=None):
 							if documentId and name:
 								d = {}
 								d['documentId'] = documentId
-								d['url'] = deep_get(teaser, 'links.target.href')
-								if not d['url']:
-									d['url'] = baseUrlDocuments + documentId
+								d['url'] = baseUrlDocuments + documentId + baseUrlDocumentsQueryParams
 								d['name'] = name
 								d['plot'] = (teaser if pageIndex == pageIndexProgramPage else page).get('synopsis', None)
 								if not d['plot']:
