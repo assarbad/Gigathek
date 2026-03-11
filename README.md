@@ -2,7 +2,8 @@
 
 Dieses Repository stellt Addons zu verschiedenen deutschen öffentlich-rechtlichen Mediatheken zur Verfügung.
 
-Die Addons sind lauffähig unter Kodi 17 "Krypton", Kodi 18 "Leia" und Kodi 19 "Matrix".
+Die Addons wurden nach bestem Wissen und Gewissen getestet unter Kodi 17 "Krypton", Kodi 18 "Leia" und Kodi 21 "Omega".
+Zur Lauffähigkeit unter anderen Kodi-Versionen kann keine Aussage getätigt werden.
 
 Das Repository kann [hier](https://github.com/68000a/Gigathek/raw/master/Gigathek/Gigathek-1.0.19.zip) heruntergeladen werden.
 
