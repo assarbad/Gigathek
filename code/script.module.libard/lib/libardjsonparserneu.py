@@ -165,8 +165,17 @@ def extract(mediaCollection):
 	return None
 
 
-def extractBestQuality(streams, fnGetFinalUrl):
-	if streams:
+def extractBestQuality(all_streams, fnGetFinalUrl):
+	if all_streams:
+		streams = all_streams if len(all_streams) == 1 else filter(
+			lambda x: 1 == len(list(
+				filter(
+					lambda y: y.get('kind','standard')=='standard' and y.get('languageCode','deu')=='deu'
+					,x.get('audios',[])
+				)
+			))
+			,all_streams
+		) 
 		media = []
 		for item in streams:
 			if isinstance(item,dict):
