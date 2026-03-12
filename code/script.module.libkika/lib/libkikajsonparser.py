@@ -3,7 +3,7 @@ import sys
 import json
 import libmediathek3 as libMediathek
 
-baseUrl = 'http://www.kika.de/api/v1/kikaplayer/kikaapp'
+baseUrl = 'https://www.kika.de/api/v1/kikaplayer/kikaapp'
 
 def getChannel(cid='1'):
 	response = libMediathek.getUrl(baseUrl + '/api/channels/' + cid)

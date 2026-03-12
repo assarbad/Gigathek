@@ -4,7 +4,7 @@ import libmediathek3 as libMediathek
 import re
 #import dateutil.parser
 
-base = 'http://www1.wdr.de'
+base = 'https://www1.wdr.de'
 
 
 def parse(url):

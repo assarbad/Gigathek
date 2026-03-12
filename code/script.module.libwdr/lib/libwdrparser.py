@@ -3,7 +3,7 @@ import json
 import re
 import libmediathek3 as libMediathek
 
-base = 'http://www1.wdr.de'
+base = 'https://www1.wdr.de'
 
 def parseShows(url):
 	response = libMediathek.getUrl(url)
@@ -13,13 +13,14 @@ def parseShows(url):
 		lis = re.compile('<li >(.+?)</li>', re.DOTALL).findall(ul)
 		for li in lis:
 			d = {}
-			uri = re.compile('href="(.+?)"', re.DOTALL).findall(li)[0]
-			if uri != 'http://www.wdrmaus.de/':
+			uri = re.compile('href="(.+?)"', re.DOTALL).findall(li)[0].replace('http://www', 'https://www')
+			if uri != 'https://www.wdrmaus.de/':
 				d['url'] = base + uri
 				d['_name'] = re.compile('<span>(.+?)</span>', re.DOTALL).findall(li)[0]
 				try:
-					thumb = re.compile('<img.+?src="(.+?)"', re.DOTALL).findall(li)[0].replace('~_v-ARDKleinerTeaser.jpg','~_v-original.jpg').replace('http//www','http://www')
-					if thumb.startswith('http'):
+					thumb = re.compile('<img.+?src="(.+?)"', re.DOTALL).findall(li)[0].replace('~_v-ARDKleinerTeaser.jpg','~_v-original.jpg')
+					for s in ['https//www', 'http//www']: thumb = thumb.replace(s, 'https://www')
+					if thumb.startswith('https://'):
 						d['_thumb'] = thumb
 					else:
 						d['_thumb'] = base + thumb
@@ -87,7 +88,7 @@ def parseVideoJs(url,signLang=False):
 	video = False
 	for vid in videos:
 		if vid.startswith('//'):
-			vid = 'http:' + vid
+			vid = 'https:' + vid
 		if vid.endswith('.m3u8'):
 			video = vid
 		elif vid.endswith('.f4m') and (not video or video.endswith('.mp4')):
@@ -99,7 +100,7 @@ def parseVideoJs(url,signLang=False):
 	d['media'].append({'url':video, 'type': 'video', 'stream':'mp4'})
 	if subUrlTtml:
 		if subUrlTtml.startswith('//'):
-			subUrlTtml = 'http:' + subUrlTtml
+			subUrlTtml = 'https:' + subUrlTtml
 		d['subtitle'] = []
 		d['subtitle'].append({'url':subUrlTtml, 'type': 'ttml', 'lang':'de'})
 	return d

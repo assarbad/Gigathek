@@ -21,7 +21,7 @@ emac_token = {"Authorization": "Bearer MWZmZjk5NjE1ODgxM2E0MTI2NzY4MzQ5MTZkOWVkY
 player_url = "https://api.arte.tv/api/player/v2/config/%s/%s"
 player_token = {"Authorization": "Bearer MzYyZDYyYmM1Y2Q3ZWRlZWFjMmIyZjZjNTRiMGY4MzY4NzBhOWQ5YjE4MGQ1NGFiODJmOTFlZDQwN2FkOTZjMQ"}
 
-magazines_url = 'http://www.arte.tv/hbbtvv2/services/web/index.php/OPA/v3/magazines/' +  current_lang;
+magazines_url = 'https://www.arte.tv/hbbtvv2/services/web/index.php/OPA/v3/magazines/' +  current_lang;
 
 stream_params = '&quality=$in:XQ,HQ,SQ&mediaType=hls&language=' + current_lang + '&channel=' + current_lang.upper()
 
