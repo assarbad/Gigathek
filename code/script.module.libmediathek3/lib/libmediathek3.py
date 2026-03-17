@@ -178,24 +178,24 @@ def ShowSeekPos(player, url):
 	icon = ""									# -> Kodi's i-Symbol
 	now = time.mktime(datetime.now().timetuple())	# Unix-Format 1489094334.0
 	now_dt = datetime.fromtimestamp(int(now))
-	StartTime = now_dt.strftime("%H:%M:%S")
+	start_time = now_dt.strftime("%H:%M:%S")
 
 	# Maximal 10 Sekunden bis sich der Player initialisiert hat (Raspi, empirisch)
 	i = 0
 	total_time = 0
-	while not monitor.waitForAbort(1) and i < 10:
+	while not monitor.waitForAbort(1) and i < 100:
 		xbmc.sleep(100)
 		if player.isPlaying():
 			total_time = int(player.getTotalTime())	# sec, float -> int, max. Puffergröße
-			if total_time:
+			if total_time > 0:
 				break
 		i += 1
 
-	if not total_time:
+	if not (total_time > 0):
 		return
 
 	last_seek = int(player.getTime())			# Basis-Wert für akt. Uhrzeit
-	LastBufTime = now_dt						# für sync errors
+	last_buf_time = now_dt						# für sync errors
 
 	while not monitor.waitForAbort(1):
 		xbmc.sleep(100)
@@ -207,15 +207,15 @@ def ShowSeekPos(player, url):
 				play_time = last_seek
 
 			# regelm. Schwankung bei Livestreams 6-10 (empirisch):
-			if abs(last_seek - play_time) >= 20:			# rückwärts/vorwärts im Puffer
+			if play_time >= 0 and last_seek >= 0 and abs(last_seek - play_time) >= 20:	# rückwärts/vorwärts im Puffer 
 				versatz = total_time - play_time
 				now = time.mktime(datetime.now().timetuple()) # Unix-Format 1489094334.0
 				time_sec = int(now) - versatz	# Versatz von akt. Zeit abziehen
 				new_dt = datetime.fromtimestamp(time_sec)
 				t_string = new_dt.strftime("%H:%M:%S")
 
-				if LastBufTime != new_dt:		# skip_sync_error
-					LastBufTime = new_dt
+				if last_buf_time != new_dt:		# skip_sync_error
+					last_buf_time = new_dt
 					xbmcgui.Dialog().notification(t_string, "Livestream-Position", icon, 5000, sound = False)
 
 			last_seek = max(0,min(play_time,total_time))
