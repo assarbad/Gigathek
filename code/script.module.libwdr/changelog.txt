@@ -1,5 +1,5 @@
-1.2.12
-- Schönheitskorrektur
+ï»¿1.2.12
+- SchÃ¶nheitskorrektur
 1.2.11
 - Umstellung auf neues Layout zur Anzeige der Videos
 1.2.10
@@ -7,24 +7,24 @@
 1.2.9
 - Bugfix "Aktuelle Stunde"
 1.2.8
-- Menüpunkte "Neu" und "Sendungen nach Datum" entfernt: nicht mehr funktionsfähig
+- MenÃ¼punkte "Neu" und "Sendungen nach Datum" entfernt: nicht mehr funktionsfÃ¤hig
 1.2.7
 - Suche funktioniert wieder
 1.2.6
 - Code vereinfacht
 1.2.5
-- Beim Hinzufügen zu Favoriten gingen die Metadaten verloren
-- Kleinere Anpassungen für Python3
+- Beim HinzufÃ¼gen zu Favoriten gingen die Metadaten verloren
+- Kleinere Anpassungen fÃ¼r Python3
 1.2.4
 - Kleinere Fehlerkorrekturen
 1.2.3
 - Behoben: Aufruf der Suche hatte Exception "KeyError" zur Folge
 1.2.2
 - Liste "Sendungen nach Datum" : "Datum aussuchen" enfernt
-- Liste "Sendungen nach Datum" : Datum zusätzlich zum Wochentag
+- Liste "Sendungen nach Datum" : Datum zusÃ¤tzlich zum Wochentag
 1.2.1
-- In der Übersicht "Sendungen A-Z" fehlten die Buchstaben Q und X.
-  Der Grund dafür: der RSS-Server vom WDR liefert für diese Buchstaben einen Fehlercode.
+- In der Ãœbersicht "Sendungen A-Z" fehlten die Buchstaben Q und X.
+  Der Grund dafÃ¼r: der RSS-Server vom WDR liefert fÃ¼r diese Buchstaben einen Fehlercode.
   Deshalb werden diese Buchstaben jetzt "synthetisiert".
   Unter "Q" erscheint jetzt "Quarks" (wie im Web), und unter "X" gar nichts (wie im Web).
   Ausserdem funktionierte der Buchstabe Y nicht, weil kein Inhalt

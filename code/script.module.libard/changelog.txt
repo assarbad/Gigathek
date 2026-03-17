@@ -1,13 +1,13 @@
-5.1.47
+ï»¿5.1.47
 - Streams mit Audio-Deskription bei der automatischen Stream-Auswahl vermeiden
 5.1.46
-- Das API der ARD hat sich geändert. Abspielen von Videos funktioniert jetzt wieder
+- Das API der ARD hat sich geÃ¤ndert. Abspielen von Videos funktioniert jetzt wieder
 5.1.45
 - Abspielen von Videos aus der Suche heraus funktioniert wieder
 5.1.44
 - Sendungen nach Datum: Umstellung auf anderes API
 5.1.43
-- Stream-Position (Uhrzeit) einblenden bei vor-/zurückspulen im Livestream
+- Stream-Position (Uhrzeit) einblenden bei vor-/zurÃ¼ckspulen im Livestream
 5.1.42
 - Sendungen nach A-Z funktioniert wieder
 5.1.41
@@ -15,33 +15,33 @@
 5.1.40
 - Sendungen nach A-Z funktioniert wieder
 5.1.39
-- Wiedergabe und Download über die Suche funktioniert wieder
+- Wiedergabe und Download Ã¼ber die Suche funktioniert wieder
 5.1.38
-- Wiedergabe und Download über die Suche funktioniert wieder
+- Wiedergabe und Download Ã¼ber die Suche funktioniert wieder
 5.1.37
 - Livestream "Das Erste" und andere funktionieren wieder
 5.1.36
 - Umstellung auf neues Layout zur Anzeige der Videos
 5.1.35
-- Classic-Mediathek z.Zt. nicht funktionsfähig
+- Classic-Mediathek z.Zt. nicht funktionsfÃ¤hig
 5.1.34
 - Livestream "Das Erste" funktioniert wieder
 5.1.33
 - Suche in der ARD Mediathek funktioniert wieder
 5.1.32
-- Schönheitskorrektur
+- SchÃ¶nheitskorrektur
 5.1.31
-- Mobile-Version der ARD Mediathek wieder funktionsfähig
+- Mobile-Version der ARD Mediathek wieder funktionsfÃ¤hig
 5.1.30
-- Kompatibilität mit Python3 wiederhergestellt
+- KompatibilitÃ¤t mit Python3 wiederhergestellt
 5.1.29
 - Suche in der ARD Mediathek funktioniert wieder
 5.1.28
-- Zusammenführung der Classic- und der Mobile-Version der ARD Mediathek
+- ZusammenfÃ¼hrung der Classic- und der Mobile-Version der ARD Mediathek
 5.1.27
 - Bugfix: nicht alle Livestreams der neuen ARD-Mediathek funktionierten
 5.1.26
-- Base-URL für Videos aus der Suchfunktion hat sich geändert
+- Base-URL fÃ¼r Videos aus der Suchfunktion hat sich geÃ¤ndert
 5.1.25
 - Suche funktioniert jetzt auch mit Umlauten
 5.1.24
@@ -49,19 +49,19 @@
 5.1.23
 - Exception "inconsistent use of tabs and spaces in indentation" behoben
 5.1.22
-- Kleinere Schönheitskorrekturen
+- Kleinere SchÃ¶nheitskorrekturen
 5.1.21
 - Code vereinfacht
 5.1.20
-- Die Streaming-URLs wurden fälschlicherweise in Kleinbuchstaben umgewandelt
+- Die Streaming-URLs wurden fÃ¤lschlicherweise in Kleinbuchstaben umgewandelt
 5.1.19
-- Schönheitskorrektur
+- SchÃ¶nheitskorrektur
 5.1.18
-- Download-Funktionalität hinzugefügt
+- Download-FunktionalitÃ¤t hinzugefÃ¼gt
 5.1.17
-- Schönheitskorrektur bei "Sendungen nach Datum" / "Alle Sender"
+- SchÃ¶nheitskorrektur bei "Sendungen nach Datum" / "Alle Sender"
 5.1.16
-- Vereinheitlichung der Listeneinträge bei "Sendungen nach Datum"
+- Vereinheitlichung der ListeneintrÃ¤ge bei "Sendungen nach Datum"
 5.1.15
 - Sendungs-Untertitel funktionieren jetzt auch in der neuen ARD-Mediathek
 - Sendungen nach A-Z glattgezogen
@@ -72,28 +72,28 @@
 - Versionsnummer nochmals korrigiert
 5.1.12
 - Umlautproblem behoben: htmlParser.unescape() akzeptiert nur ASCII-Strings
-- Vorbereitung für neue ARD-Mediathek
+- Vorbereitung fÃ¼r neue ARD-Mediathek
 5.1.11
 - Sendersortierung korrigiert
 - Funktionen list() und getMetadata() zentralisiert
 5.1.8
 - Sendungen nach A-Z funktioniert wieder
 5.1.7
-- Suche ist wieder verfügbar
+- Suche ist wieder verfÃ¼gbar
 5.1.6
-- Beim Hinzufügen zu Favoriten gingen die Metadaten verloren
-- Menüpunkte "Neu" und "Meistgesehen" entfernt
+- Beim HinzufÃ¼gen zu Favoriten gingen die Metadaten verloren
+- MenÃ¼punkte "Neu" und "Meistgesehen" entfernt
 - Thumbnail funktioniert wieder
-- Kleinere Anpassungen für Python3
+- Kleinere Anpassungen fÃ¼r Python3
 5.1.5
-- Bugfix: Es wurde nicht immer der Stream mit der besten Qualität verwendet
+- Bugfix: Es wurde nicht immer der Stream mit der besten QualitÃ¤t verwendet
 5.1.4
 - Sendungen nach Datum: wg. fehlerhafter URL waren die Tage verschoben
 5.1.3
 - Liste "Sendungen nach Datum" : "Datum aussuchen" enfernt
-- Liste "Sendungen nach Datum" : Datum zusätzlich zum Wochentag
+- Liste "Sendungen nach Datum" : Datum zusÃ¤tzlich zum Wochentag
 5.1.2
-- Qualitätsverbesserungen
+- QualitÃ¤tsverbesserungen
 5.1.1
 - Disabled inputstream.adaptive for WDR streams
 5.1.0

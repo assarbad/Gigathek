@@ -1,13 +1,13 @@
-2.0.8
+ï»¿2.0.8
 - Umstellung auf neues Layout zur Anzeige der Videos
 2.0.7
-- KiKa Mediathek wieder funktionsfähig
+- KiKa Mediathek wieder funktionsfÃ¤hig
 2.0.6
-- Download-Funktionalität hinzugefügt
+- Download-FunktionalitÃ¤t hinzugefÃ¼gt
 2.0.5
-- Neue Einstellung "Adaptive Streams wenn möglich ignorieren"
+- Neue Einstellung "Adaptive Streams wenn mÃ¶glich ignorieren"
 2.0.4
-- Beim Hinzufügen zu Favoriten gingen die Metadaten verloren
+- Beim HinzufÃ¼gen zu Favoriten gingen die Metadaten verloren
 2.0.3
 - fallback mechanism for KiKa stream selection
 2.0.2

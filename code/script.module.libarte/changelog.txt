@@ -1,56 +1,56 @@
-1.0.30
+ï»¿1.0.30
 - Sendungen nach Datum funktioniert wieder
 1.0.29
 - Stream-API "OPAv3" funktioniert wieder
 1.0.28
 - Umstellung von OPA-API auf EMAC-API => "Meistgesehen", "Suche" und Unterordner funktionieren wieder
 1.0.27
-- In den Einstellungen der ARTE Mediathek kann das bevorzugte Stream-API ausgewählt werden (Default / OPAv3)
+- In den Einstellungen der ARTE Mediathek kann das bevorzugte Stream-API ausgewÃ¤hlt werden (Default / OPAv3)
 1.0.26
 - Umstellung auf neues Layout zur Anzeige der Videos
 1.0.25
 - Bugfix: Einige Streams konnten nicht abgespielt werden
 1.0.23
-- Meistgesehen: TV-Serien wurden nicht berücksichtigt
+- Meistgesehen: TV-Serien wurden nicht berÃ¼cksichtigt
 1.0.22
 - Sendungen nach Datum: Uhrzeit wird wieder angezeigt
 1.0.21
-- Schönheitskorrektur Info-Text
+- SchÃ¶nheitskorrektur Info-Text
 1.0.20
 - Suche: einige Suchbegriffe verursachten einen Absturz
 1.0.19
 - Hotfix "Suche"
 1.0.18
-- Sendedatum bzw. Verfügbarkeit zum Plot hinzugefügt
+- Sendedatum bzw. VerfÃ¼gbarkeit zum Plot hinzugefÃ¼gt
 1.0.17
 - Sendungen nach A-Z funktioniert wieder
 1.0.16
-- Vereinheitlichung der Listeneinträge bei "Sendungen nach Datum"
+- Vereinheitlichung der ListeneintrÃ¤ge bei "Sendungen nach Datum"
 1.0.15
 - Code vereinfacht
 1.0.14
-- Bei Sendungen in Originalsprache wurden fälschlicherweise fremdsprachige Untertitel angezeigt
+- Bei Sendungen in Originalsprache wurden fÃ¤lschlicherweise fremdsprachige Untertitel angezeigt
 1.0.13
 - Sendungen nach Datum: Uhrzeit vor dem Titel
 1.0.12
 - Wg. Favoriten: Titel, Plot und Thumbnail in Metadaten speichern
 1.0.10
-- Schönheitskorrektur
+- SchÃ¶nheitskorrektur
 1.0.9
 - Umstellung auf neues API
 1.0.8
-- In den Einstellungen der ARTE Mediathek kann jetzt auch Französisch als bevorzugte Sprache gewählt werden
+- In den Einstellungen der ARTE Mediathek kann jetzt auch FranzÃ¶sisch als bevorzugte Sprache gewÃ¤hlt werden
 1.0.7
-- Bei Originalsendungen mit Untertitel wurden fälschlicherweise die französischen Untertitel gewählt
+- Bei Originalsendungen mit Untertitel wurden fÃ¤lschlicherweise die franzÃ¶sischen Untertitel gewÃ¤hlt
 1.0.6
-- Aussagekräftige Fehlemeldung wenn Medium nicht abspielbar ist
+- AussagekrÃ¤ftige Fehlemeldung wenn Medium nicht abspielbar ist
 1.0.5
 - Bugfix: Startzeit der Sendungen war um eine Stunde verschoben
 1.0.4
-- Bugfix: Sendungen mit Audiodeskription wurden fälschlicherweise bevorzugt
+- Bugfix: Sendungen mit Audiodeskription wurden fÃ¤lschlicherweise bevorzugt
 1.0.3
 - Abbruch der "Suche" hatte "HTTP Error 404: Not Found" zur Folge
-- Menüpunkt "Themen" funktionierte nicht mehr
+- MenÃ¼punkt "Themen" funktionierte nicht mehr
 1.0.2
 - Fixed playback for some videos
 1.0.1
