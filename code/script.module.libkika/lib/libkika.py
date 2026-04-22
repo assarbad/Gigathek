@@ -22,7 +22,7 @@ def libKikaListMain():
 	#return libMediathek.populateDirDate('libKikaListDateVideos')
 
 #def libKikaListDateVideos():
-#	return libKikaJsonParser.getVideos('http://itv.mit-xperts.com/kikamediathek/kika/api.php/videos/hbbtv/suche/hbbtv-search-100-hbbtv.json?day=-'+params['datum'],type='date')
+#	return libKikaJsonParser.getVideos('https://itv.mit-xperts.com/kikamediathek/kika/api.php/videos/hbbtv/suche/hbbtv-search-100-hbbtv.json?day=-'+params['datum'],type='date')
 
 def libKikaListShows():
 	libMediathek.sortAZ()
@@ -38,7 +38,7 @@ def libKikaPlay():
 
 #def libKikaSearch():
 #	search_string = libMediathek.getSearchString()
-#	return libKikaJsonParser.getVideos('http://itv.mit-xperts.com/kikamediathek/kika/api.php/videos/hbbtv/suche/hbbtv-search-100-hbbtv.json?searchText='+search_string)
+#	return libKikaJsonParser.getVideos('https://itv.mit-xperts.com/kikamediathek/kika/api.php/videos/hbbtv/suche/hbbtv-search-100-hbbtv.json?searchText='+search_string)
 
 modes = {
 	'libKikaListMain':  ( libKikaListMain, 'videos' ),

@@ -28,7 +28,7 @@ def libWdrListLetters():
 	return libMediathek.populateDirAZ('libWdrListShows',ignoreLetters)
 
 def libWdrListShows():
-	#return libWdrParser.parseShows('http://www1.wdr.de/mediathek/video/sendungen-a-z/sendungen-'+params['name'].lower()+'-102.html')
+	#return libWdrParser.parseShows('https://www1.wdr.de/mediathek/video/sendungen-a-z/sendungen-'+params['name'].lower()+'-102.html')
 	return libWdrRssAndroidParser.parseShows(params['name'].lower())
 
 def libWdrListVideos():
@@ -39,7 +39,7 @@ def libWdrListSearch():
 	if search_string is None:
 		search_string = libMediathek.getSearchString()
 	return libWdrHtmlParser.parse(
-		"http://www1.wdr.de/mediathek/video/suche/avsuche100~suche_parentId-videosuche100.html?pageNumber=1&sort=date&q="+search_string\
+		"https://www1.wdr.de/mediathek/video/suche/avsuche100~suche_parentId-videosuche100.html?pageNumber=1&sort=date&q="+search_string\
 	) if search_string else None
 
 def libWdrPlay():
