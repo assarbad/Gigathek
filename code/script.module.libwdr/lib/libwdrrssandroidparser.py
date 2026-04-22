@@ -4,7 +4,7 @@ import libmediathek3 as libMediathek
 import re
 #import dateutil.parser
 
-base = 'http://www1.wdr.de'
+base = 'https://www1.wdr.de'
 
 
 def parseShows(letter):
@@ -37,11 +37,11 @@ def parseShows(letter):
 
 def parseVideos(id,type=None,grepShowFromVideo=False):
 	if grepShowFromVideo:
-		url = 'http://www1.wdr.de/Medien/mediathek/video/sendungen-a-z/'+id+'~_variant-android.rss'
+		url = 'https://www1.wdr.de/Medien/mediathek/video/sendungen-a-z/'+id+'~_variant-android.rss'
 		response = libMediathek.getUrl(url)
 		url = re.compile('<link>(.+?)</link>').findall(response)[0]
 	else:
-		url = 'http://www1.wdr.de/'+id+'~_variant-android.mobile'
+		url = 'https://www1.wdr.de/'+id+'~_variant-android.mobile'
 	response = libMediathek.getUrl(url)
 	items = re.compile('<item>(.+?)</item>', re.DOTALL).findall(response)
 	l = []

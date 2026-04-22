@@ -92,7 +92,7 @@ def getVideoUrl(url):
 def parseSearchAPI(search_string):
 	l = []
 	try:
-		response = libMediathek.getUrl('http://api.ardmediathek.de/page-gateway/widgets/ard/search/vod?searchString='+search_string)
+		response = libMediathek.getUrl('https://api.ardmediathek.de/page-gateway/widgets/ard/search/vod?searchString='+search_string)
 		j = json.loads(response)
 		for item in j.get('teasers',[]):
 			if isinstance(item,dict) and (item.get('type',None) == 'ondemand'):

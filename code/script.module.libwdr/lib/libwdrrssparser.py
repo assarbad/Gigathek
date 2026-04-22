@@ -5,7 +5,7 @@ import re
 import libmediathek3 as libMediathek
 #import dateutil.parser
 
-base = 'http://www1.wdr.de'
+base = 'https://www1.wdr.de'
 
 def parseVideos(url):#TODO remove "mehr"
 	if not url.endswith('index.html'):

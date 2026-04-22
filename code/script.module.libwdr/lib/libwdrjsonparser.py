@@ -4,7 +4,7 @@ import libmediathek3 as libMediathek
 import re
 #import dateutil.parser
 
-base = 'http://www1.wdr.de'
+base = 'https://www1.wdr.de'
 
 #channels:
 #10 - wdr fernsehen
@@ -16,7 +16,7 @@ def getDate(d):
 	
 def parseEpg(url,channels=[10]):
 	l = []
-	#url = 'http://www.wdr.de/programmvorschau/ajax/alle/uebersicht/2016-09-18/'
+	#url = 'https://www.wdr.de/programmvorschau/ajax/alle/uebersicht/2016-09-18/'
 	response = libMediathek.getUrl(url)
 	j = json.loads(response)
 	for sender in j['sender']:
