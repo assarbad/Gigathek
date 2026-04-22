@@ -1,4 +1,6 @@
-﻿5.1.47
+﻿5.1.48
+- Use https instead of http
+5.1.47
 - Streams mit Audio-Deskription bei der automatischen Stream-Auswahl vermeiden
 5.1.46
 - Das API der ARD hat sich geändert. Abspielen von Videos funktioniert jetzt wieder
