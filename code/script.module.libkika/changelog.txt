@@ -1,4 +1,8 @@
-﻿2.0.8
+﻿2.0.10
+- Behoben: "Sendungen Neu" machte ab und an Probleme
+2.0.9
+- Use https instead of http
+2.0.8
 - Umstellung auf neues Layout zur Anzeige der Videos
 2.0.7
 - KiKa Mediathek wieder funktionsfähig
