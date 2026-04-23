@@ -1,4 +1,6 @@
-﻿2.1.30
+﻿2.1.31
+- Behoben: sporadische Exception "list index out of range" in libzdftokengrabber.py
+2.1.30
 - Livestreams wahlweise aus Datei 'livestream.json' lesen oder via API beziehen
   Datei 'livestream.json' wahlweise in special://home/addons oder in special://profile/addon_data suchen
 2.1.29
