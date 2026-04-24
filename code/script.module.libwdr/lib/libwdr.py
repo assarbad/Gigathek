@@ -19,9 +19,9 @@ def list():
 def libWdrListMain():
 	libMediathek.searchWorkaroundRemove()
 	l = []
-	#l.append({'_name':translation(31030), 'mode':'libWdrListVideos', 'id':'sendung-verpasst-100', '_type':'dir'})
+	# l.append({'_name':translation(31030), 'mode':'libWdrListVideos', 'id':'sendung-verpasst-100', '_type':'dir'})
 	l.append({'_name':translation(31032), 'mode':'libWdrListLetters', '_type':'dir'})
-	l.append({'_name':translation(31039), 'mode':'libWdrListSearch', '_type':'dir'})
+	# l.append({'_name':translation(31039), 'mode':'libWdrListSearch', '_type':'dir'})
 	return l
 
 def libWdrListLetters():
@@ -39,7 +39,7 @@ def libWdrListSearch():
 	if search_string is None:
 		search_string = libMediathek.getSearchString()
 	return libWdrHtmlParser.parse(
-		"https://www1.wdr.de/mediathek/video/suche/avsuche100~suche_parentId-videosuche100.html?pageNumber=1&sort=date&q="+search_string\
+		"https://www1.wdr.de/mediathek/video/suche/avsuche100~suche_parentId-videosuche100.html?pageNumber=1&sort=date&q="+search_string
 	) if search_string else None
 
 def libWdrPlay():

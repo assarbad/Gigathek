@@ -1,4 +1,8 @@
-﻿1.2.12
+﻿1.2.14
+- Menüpunkt "Suche" wurde entfernt weil nicht mehr funktionsfähig
+1.2.13
+- Use https instead of http
+1.2.12
 - Schönheitskorrektur
 1.2.11
 - Umstellung auf neues Layout zur Anzeige der Videos

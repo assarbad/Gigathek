@@ -13,13 +13,12 @@ def parseShows(url):
 		lis = re.compile('<li >(.+?)</li>', re.DOTALL).findall(ul)
 		for li in lis:
 			d = {}
-			uri = re.compile('href="(.+?)"', re.DOTALL).findall(li)[0].replace('http://www', 'https://www')
+			uri = re.compile('href="(.+?)"', re.DOTALL).findall(li)[0]
 			if uri != 'https://www.wdrmaus.de/':
 				d['url'] = base + uri
 				d['_name'] = re.compile('<span>(.+?)</span>', re.DOTALL).findall(li)[0]
 				try:
 					thumb = re.compile('<img.+?src="(.+?)"', re.DOTALL).findall(li)[0].replace('~_v-ARDKleinerTeaser.jpg','~_v-original.jpg')
-					for s in ['https//www', 'http//www']: thumb = thumb.replace(s, 'https://www')
 					if thumb.startswith('https://'):
 						d['_thumb'] = thumb
 					else:
@@ -28,11 +27,11 @@ def parseShows(url):
 				d['_channel'] = 'WDR'
 				d['_type'] = 'dir'
 				d['mode'] = 'libWdrListVideos'
-				
+
 				l.append(d)
-		
+
 	return l
-	
+
 def parseVideos(url):
 	response = libMediathek.getUrl(url)
 	typeA = re.compile('<div class="box".+?<a(.+?)>(.+?)</a>.+?<a(.+?)>(.+?)</a>', re.DOTALL).findall(response)
@@ -51,17 +50,20 @@ def parseVideos(url):
 			#TODO duration, ut
 			d['_type'] = 'video'
 			d['mode'] = 'libWdrPlay'
-			
+
 			l.append(d)
 	return l
-	
+
 def parseVideo(url,signLang=False):
 	response = libMediathek.getUrl(url)
 	#libMediathek.log(response)
-	j = json.loads(re.compile('<a href="javascript:void\(0\);" class="mediaLink video" data-extension=\'(.+?)\'', re.DOTALL).findall(response)[0])
-	url = j['mediaObj']['url']
-	return parseVideoJs(url,signLang)
-	
+	regex = re.compile('<a href="javascript:void\(0\);"\s+rel="nofollow"\s+class="mediaLink video"\s+title="Video starten"\s+data-extension-ard=\'(.+?)\'', re.DOTALL)
+	regex_found = regex.findall(response)
+	if regex_found:
+		url = json.loads(regex_found[0])['mediaObj']['ref']
+		return parseVideoJs(url,signLang)
+	return None
+
 def parseVideoJs(url,signLang=False):
 	response = libMediathek.getUrl(url)
 	try:
@@ -104,7 +106,7 @@ def parseVideoJs(url,signLang=False):
 		d['subtitle'] = []
 		d['subtitle'].append({'url':subUrlTtml, 'type': 'ttml', 'lang':'de'})
 	return d
-	
+
 def startTimeToInt(s):
 	HH,MM,SS = s.split(":")
 	return int(HH) * 60 + int(MM)
